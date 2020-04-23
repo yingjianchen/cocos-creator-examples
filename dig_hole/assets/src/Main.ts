@@ -1,6 +1,8 @@
+// author: http://lamyoung.com/
 
 const DIG_RADIUS = 50;
 const DIG_FRAGMENT = 12;
+const DIG_OPTIMIZE_SIZE = 1;
 
 
 const { ccclass, property } = cc._decorator;
@@ -17,13 +19,26 @@ export default class Main extends cc.Component {
     @property(cc.Node)
     node_ball: cc.Node = null;
 
-    private _regions = [[]];
+    @property(cc.Node)
+    node_qrCode: cc.Node = null;
+
+    private _regions: number[][][] = [];
 
     onLoad() {
         cc.director.getPhysicsManager().enabled = true;
-        // cc.director.getPhysicsManager().debugDrawFlags = 1;
+        // 开启物理步长的设置
+        cc.director.getPhysicsManager().enabledAccumulator = true;
 
-        for (let index = 0; index < 20; index++) {
+        // 物理步长，默认 FIXED_TIME_STEP 是 1/60
+        cc.PhysicsManager.FIXED_TIME_STEP = 1 / 30;
+
+        // 每次更新物理系统处理速度的迭代次数，默认为 10
+        cc.PhysicsManager.VELOCITY_ITERATIONS = 8;
+
+        // 每次更新物理系统处理位置的迭代次数，默认为 10
+        cc.PhysicsManager.POSITION_ITERATIONS = 8;
+
+        for (let index = 0; index < 100; index++) {
             const c = this.node_dirty.addComponent(cc.PhysicsChainCollider);
             c.loop = true;
             c.enabled = false;
@@ -31,11 +46,15 @@ export default class Main extends cc.Component {
 
         this.graphics.node.on(cc.Node.EventType.TOUCH_START, this._touchMove, this);
         this.graphics.node.on(cc.Node.EventType.TOUCH_MOVE, this._touchMove, this);
-        this.graphics.node.on(cc.Node.EventType.TOUCH_MOVE, this._touchMove, this);
+ 
     }
 
     start() {
         this.reset();
+    }
+
+    private _optimizePoint(point) {
+        return [Math.floor(point[0] * DIG_OPTIMIZE_SIZE) / DIG_OPTIMIZE_SIZE, Math.floor(point[1] * DIG_OPTIMIZE_SIZE) / DIG_OPTIMIZE_SIZE];
     }
 
     private _optimizeRegions() {
@@ -44,10 +63,12 @@ export default class Main extends cc.Component {
             const pos = this._regions[index];
             const newPos = [];
             pos.forEach((p, i) => {
-                const p1 = pos[(i + 1) % pos.length];
-                const disX = p1[0] - p[0]
-                const disY = p1[1] - p[1]
-                if ((disX * disX + disY * disY) > 25) {
+                p = this._optimizePoint(p);
+                const p_pre = this._optimizePoint(pos[(i - 1 + pos.length) % pos.length]);
+                const p_next = this._optimizePoint(pos[(i + 1) % pos.length]);
+                const vec1 = cc.v2(p[0] - p_pre[0], p[1] - p_pre[1]);
+                const vec2 = cc.v2(p_next[0] - p[0], p_next[1] - p[1]);
+                if (vec1.lengthSqr() != 0 && vec2.lengthSqr() != 0 && vec1.cross(vec2) != 0) {
                     newPos.push(p);
                 }
             })
@@ -63,36 +84,70 @@ export default class Main extends cc.Component {
         const regions = [[]];
         const pos = this.graphics.node.convertToNodeSpaceAR(touch.getLocation());
         // cc.log(touch.getDelta());
+        const delta = touch.getDelta();
 
         const count = DIG_FRAGMENT;
-        for (let index = 0; index < count; index++) {
-            const r = 2 * Math.PI * index / count;
-            regions[0].push([pos.x + DIG_RADIUS * Math.cos(r), pos.y + DIG_RADIUS * Math.sin(r)]);
+        if (delta.lengthSqr() < 5) {
+            for (let index = 0; index < count; index++) {
+                const r = 2 * Math.PI * index / count;
+                const x = pos.x + DIG_RADIUS * Math.cos(r);
+                const y = pos.y + DIG_RADIUS * Math.sin(r);
+                regions[0].push(this._optimizePoint([x, y]));
+            }
+        } else {
+            const startPos = pos.sub(delta);
+            for (let index = 0; index < count; index++) {
+                const r = 2 * Math.PI * index / count;
+                let vec_x = DIG_RADIUS * Math.cos(r);
+                let vec_y = DIG_RADIUS * Math.sin(r);
+                let x, y;
+                if (delta.dot(cc.v2(vec_x, vec_y)) > 0) {
+                    x = pos.x + vec_x;
+                    y = pos.y + vec_y;
+                } else {
+                    x = startPos.x + vec_x;
+                    y = startPos.y + vec_y;
+                }
+                regions[0].push(this._optimizePoint([x, y]));
+            }
+
         }
 
-        const result = PolyBool.difference({
+
+        // const result = PolyBool.difference({
+        //     regions: this._regions,
+        //     inverted: false
+        // }, {
+        //     regions,
+        //     inverted: false
+        // });
+
+        const seg1 = PolyBool.segments({
             regions: this._regions,
             inverted: false
-        }, {
+        });
+        const seg2 = PolyBool.segments({
             regions,
             inverted: false
         });
-
+        const comb = PolyBool.combine(seg1, seg2);
+        const result = PolyBool.polygon(PolyBool.selectDifference(comb));
+ 
         this._regions = result.regions;
         this._optimizeRegions();
         this.draw();
+ 
     }
 
     reset() {
         this._regions = [
             [[-375, -667], [-375, 500], [-50, 500], [-40, 450], [40, 450], [50, 500], [375, 500], [375, -667]]
         ];
-        this.draw();
         this.node_ball.setPosition(0, 500);
+        this.draw();
     }
 
     draw() {
-
         const chains = this.node_dirty.getComponents(cc.PhysicsChainCollider);
         chains.forEach((c) => {
             c.enabled = false;
@@ -103,10 +158,10 @@ export default class Main extends cc.Component {
         for (let index = 0; index < this._regions.length; index++) {
             const pos = this._regions[index];
             let poly = chains[index];
-            // if (!poly) {
-            //     poly = this.node_dirty.addComponent(cc.PhysicsChainCollider);
-            //     poly.loop = true;
-            // }
+            if (!poly) {
+                poly = this.node_dirty.addComponent(cc.PhysicsChainCollider);
+                poly.loop = true;
+            }
 
             poly.points.length = 0;
             poly.points = pos.map((v, i) => {
@@ -144,7 +199,6 @@ export default class Main extends cc.Component {
             this.graphics.fill();
         })
 
-
         // window['_regions'] = this._regions;
     }
 
@@ -158,4 +212,15 @@ export default class Main extends cc.Component {
         });
     }
 
+
+    private debug() {
+        cc.debug.setDisplayStats(!cc.debug.isDisplayStats());
+        cc.director.getPhysicsManager().debugDrawFlags = cc.debug.isDisplayStats() ? 1 : 0;
+    }
+
+    private showOrHideQrCode() {
+        this.node_qrCode.active = !this.node_qrCode.active;
+    }
+
 }
+// 欢迎关注微信公众号[白玉无冰]
