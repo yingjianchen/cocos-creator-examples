@@ -38,11 +38,11 @@ export default class Main extends cc.Component {
         // 每次更新物理系统处理位置的迭代次数，默认为 10
         cc.PhysicsManager.POSITION_ITERATIONS = 8;
 
-        for (let index = 0; index < 100; index++) {
-            const c = this.node_dirty.addComponent(cc.PhysicsChainCollider);
-            c.loop = true;
-            c.enabled = false;
-        }
+        // for (let index = 0; index < 100; index++) {
+        //     const c = this.node_dirty.addComponent(cc.PhysicsChainCollider);
+        //     c.loop = true;
+        //     c.enabled = false;
+        // }
 
         this.graphics.node.on(cc.Node.EventType.TOUCH_START, this._touchMove, this);
         this.graphics.node.on(cc.Node.EventType.TOUCH_MOVE, this._touchMove, this);
@@ -170,7 +170,9 @@ export default class Main extends cc.Component {
             });
 
             poly.enabled = true;
+            poly['apply']();
             enabled_chains_points[index] = poly.points;
+
         }
 
         this.graphics.clear(true);
