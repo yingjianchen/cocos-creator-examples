@@ -25,6 +25,8 @@ export default class Main extends cc.Component {
     private _regions: number[][][] = [];
 
     onLoad() {
+        cc.macro.ENABLE_MULTI_TOUCH = false;
+
         cc.director.getPhysicsManager().enabled = true;
         // 开启物理步长的设置
         cc.director.getPhysicsManager().enabledAccumulator = true;
@@ -38,15 +40,15 @@ export default class Main extends cc.Component {
         // 每次更新物理系统处理位置的迭代次数，默认为 10
         cc.PhysicsManager.POSITION_ITERATIONS = 8;
 
-        // for (let index = 0; index < 100; index++) {
-        //     const c = this.node_dirty.addComponent(cc.PhysicsChainCollider);
-        //     c.loop = true;
-        //     c.enabled = false;
-        // }
+        for (let index = 0; index < 100; index++) {
+            const c = this.node_dirty.addComponent(cc.PhysicsChainCollider);
+            c.loop = true;
+            c.enabled = false;
+        }
 
         this.graphics.node.on(cc.Node.EventType.TOUCH_START, this._touchMove, this);
         this.graphics.node.on(cc.Node.EventType.TOUCH_MOVE, this._touchMove, this);
- 
+
     }
 
     start() {
@@ -132,11 +134,11 @@ export default class Main extends cc.Component {
         });
         const comb = PolyBool.combine(seg1, seg2);
         const result = PolyBool.polygon(PolyBool.selectDifference(comb));
- 
+
         this._regions = result.regions;
         this._optimizeRegions();
         this.draw();
- 
+
     }
 
     reset() {
@@ -170,7 +172,7 @@ export default class Main extends cc.Component {
             });
 
             poly.enabled = true;
-            poly['apply']();
+            // poly['apply']();
             enabled_chains_points[index] = poly.points;
 
         }
