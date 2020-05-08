@@ -1,6 +1,24 @@
 // author: http://lamyoung.com/
+/** author
+█████████████████████████████████
+█████████████████████████████████
+████ ▄▄▄▄▄ █▀▀ ██   ██ ▄▄▄▄▄ ████
+████ █   █ █▄▀██▀█  ▄█ █   █ ████
+████ █▄▄▄█ █ ▄ █ ▀▄ ▄█ █▄▄▄█ ████
+████▄▄▄▄▄▄▄█ █ ▀▄█ █▄█▄▄▄▄▄▄▄████
+████▄▄▀▄▀█▄▄▀▀█  ██▄▄▀ ▄▄█▄▄▀████
+████ █ ▄▄▄▄█▄▀▀  ▀ █  █▀ ██▄▄████
+█████▀█▀  ▄▄██▄ █▀▄█▄▄ ▀█ ▀▄ ████
+████▄▀█▀██▄██   █▄▄█ ▄██▀▀▄▀▄████
+████▄▄▄▄▄█▄█▀ ▀█  ▀  ▄▄▄   █▀████
+████ ▄▄▄▄▄ █▄▀█▄ █ ▄ █▄█ ▀▀ ▄████
+████ █   █ █▀▀█▀██▀█▄▄▄  █▀█▄████
+████ █▄▄▄█ █▀ ▄███▀▄▀▀▀█▄ ▄█▄████
+████▄▄▄▄▄▄▄█▄███▄██▄▄▄█▄███▄▄████
+█████████████████████████████████
+█████████████████████████████████
 
-declare const ClipperLib: any;
+*/
 
 const { ccclass, property, menu, requireComponent } = cc._decorator;
 
@@ -8,7 +26,6 @@ const { ccclass, property, menu, requireComponent } = cc._decorator;
 @menu("i18n:MAIN_MENU.component.physics/Collider/PolygonEX-lamyoung.com")
 @requireComponent(cc.RigidBody)
 export default class PhysicsPolygonColliderEx extends cc.Component {
-
 
     public get polys() {
         return this._polys.map((v) => { return this._convertClipperPathToVecArray(v) });
@@ -30,6 +47,8 @@ export default class PhysicsPolygonColliderEx extends cc.Component {
 
     polyDifference(poly: cc.Vec2[], ctx?: cc.Graphics) {
         // if (poly.length < 3) return;
+
+        // 计算新的多边形
         const cpr = new ClipperLib.Clipper();
         const subj_paths = this._polys;
         const clip_paths = [this._convertVecArrayToClipperPath(poly)]
@@ -43,6 +62,7 @@ export default class PhysicsPolygonColliderEx extends cc.Component {
         this._polys = ClipperLib.Clipper.PolyTreeToPaths(solution_polytree);
         // cc.log(solution_expolygons);
 
+        // 将多边形分割成三角形 并绘制出来
         ctx && ctx.clear(true);
         let _physicsPolygonColliders_count = 0;
         for (const expolygon of solution_expolygons) {
@@ -50,11 +70,13 @@ export default class PhysicsPolygonColliderEx extends cc.Component {
             const swctx = new poly2tri.SweepContext(countor);
             const holes = expolygon.holes.map(h => { return this._convertClipperPathToPoly2triPoint(h) });
             try {
+                // 防止 addhole 失败 使用try
                 swctx.addHoles(holes);
                 swctx.triangulate();
                 const triangles = swctx.getTriangles();
                 // cc.log('triangles', triangles);
                 for (const tri of triangles) {
+                    // 逐一处理三角形
                     let c = this._physicsPolygonColliders[_physicsPolygonColliders_count];
                     if (!c) {
                         c = this.addComponent(cc.PhysicsPolygonCollider);
@@ -71,7 +93,7 @@ export default class PhysicsPolygonColliderEx extends cc.Component {
                     });
                     c.apply();
                     _physicsPolygonColliders_count++;
-                    if(ctx){
+                    if (ctx) {
                         ctx.close();
                         ctx.fill();
                     }
@@ -86,14 +108,12 @@ export default class PhysicsPolygonColliderEx extends cc.Component {
             } catch{
 
             }
-
         }
-
     }
-
 
     lateUpdate(dt: number) {
         if (this._commands.length) {
+            // 每帧执行命令队列
             for (let index = 0; index < 2; index++) {
                 const cmd = this._commands.shift();
                 if (cmd)
@@ -101,10 +121,8 @@ export default class PhysicsPolygonColliderEx extends cc.Component {
                 else
                     break;
             }
-
         }
     }
-
 
     private _convertVecArrayToClipperPath(poly: cc.Vec2[]) {
         return poly.map((p) => { return { X: p.x, Y: p.y } });
@@ -122,3 +140,25 @@ export default class PhysicsPolygonColliderEx extends cc.Component {
 
 // 欢迎关注微信公众号[白玉无冰]
 // qq 交流群 859642112
+
+/**
+█████████████████████████████████████
+█████████████████████████████████████
+████ ▄▄▄▄▄ █▀█ █▄██▀▄ ▄▄██ ▄▄▄▄▄ ████
+████ █   █ █▀▀▀█ ▀▄▀▀▀█▄▀█ █   █ ████
+████ █▄▄▄█ █▀ █▀▀▀ ▀▄▄ ▄ █ █▄▄▄█ ████
+████▄▄▄▄▄▄▄█▄▀ ▀▄█ ▀▄█▄▀ █▄▄▄▄▄▄▄████
+████▄▄  ▄▀▄▄ ▄▀▄▀▀▄▄▄ █ █ ▀ ▀▄█▄▀████
+████▀ ▄  █▄█▀█▄█▀█  ▀▄ █ ▀ ▄▄██▀█████
+████ ▄▀▄▄▀▄ █▄▄█▄ ▀▄▀ ▀ ▀ ▀▀▀▄ █▀████
+████▀ ██ ▀▄ ▄██ ▄█▀▄ ██▀ ▀ █▄█▄▀█████
+████   ▄██▄▀ █▀▄▀▄▀▄▄▄▄ ▀█▀ ▀▀ █▀████
+████ █▄ █ ▄ █▀ █▀▄█▄▄▄▄▀▄▄█▄▄▄▄▀█████
+████▄█▄█▄█▄█▀ ▄█▄   ▀▄██ ▄▄▄ ▀   ████
+████ ▄▄▄▄▄ █▄██ ▄█▀  ▄   █▄█  ▄▀█████
+████ █   █ █ ▄█▄ ▀  ▀▀██ ▄▄▄▄ ▄▀ ████
+████ █▄▄▄█ █ ▄▄▀ ▄█▄█▄█▄ ▀▄   ▄ █████
+████▄▄▄▄▄▄▄█▄██▄▄██▄▄▄█████▄▄█▄██████
+█████████████████████████████████████
+█████████████████████████████████████
+ */

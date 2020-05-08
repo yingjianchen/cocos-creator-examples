@@ -2,8 +2,11 @@
 
 import PhysicsPolygonColliderEx from "./PhysicsPolygonColliderEx";
 
+// 挖洞圆半径
 const DIG_RADIUS = 50;
+// 圆的边的数量
 const DIG_FRAGMENT = 12;
+// 归一到单位化
 const DIG_OPTIMIZE_SIZE = 1;
 
 
@@ -24,7 +27,6 @@ export default class Main_poly extends cc.Component {
     @property(cc.Node)
     node_qrCode: cc.Node = null;
 
-
     @property(PhysicsPolygonColliderEx)
     polyEx: PhysicsPolygonColliderEx = null;
 
@@ -44,8 +46,10 @@ export default class Main_poly extends cc.Component {
         // 每次更新物理系统处理位置的迭代次数，默认为 10
         cc.PhysicsManager.POSITION_ITERATIONS = 8;
 
-        this.graphics.node.on(cc.Node.EventType.TOUCH_START, this._touchMove, this);
+        this.graphics.node.on(cc.Node.EventType.TOUCH_START, this._touchStart, this);
         this.graphics.node.on(cc.Node.EventType.TOUCH_MOVE, this._touchMove, this);
+        this.graphics.node.on(cc.Node.EventType.TOUCH_END, this._touchEnd, this);
+        this.graphics.node.on(cc.Node.EventType.TOUCH_CANCEL, this._touchEnd, this);
 
         this.graphics.fillColor = cc.Color.ORANGE;
     }
@@ -60,40 +64,57 @@ export default class Main_poly extends cc.Component {
         return cc.v2(x, y);
     }
 
+    private _touchStart(touch: cc.Touch) {
+        this._touchStartPos = undefined;
+        this._touchMove(touch);
+    }
 
+    private _touchStartPos: cc.Vec2;
     private _touchMove(touch: cc.Touch) {
         const regions: cc.Vec2[] = [];
         const pos = this.graphics.node.convertToNodeSpaceAR(touch.getLocation());
-        const delta = touch.getDelta();
+
         const count = DIG_FRAGMENT;
-        if (delta.lengthSqr() < 5) {
+        if (!this._touchStartPos) {
             for (let index = 0; index < count; index++) {
                 const r = 2 * Math.PI * index / count;
                 const x = pos.x + DIG_RADIUS * Math.cos(r);
                 const y = pos.y + DIG_RADIUS * Math.sin(r);
                 regions.push(this._optimizePoint([x, y]));
             }
+            this._touchStartPos = pos;
         } else {
-            const startPos = pos.sub(delta);
-            for (let index = 0; index < count; index++) {
-                const r = 2 * Math.PI * index / count;
-                let vec_x = DIG_RADIUS * Math.cos(r);
-                let vec_y = DIG_RADIUS * Math.sin(r);
-                let x, y;
-                if (delta.dot(cc.v2(vec_x, vec_y)) > 0) {
-                    x = pos.x + vec_x;
-                    y = pos.y + vec_y;
-                } else {
-                    x = startPos.x + vec_x;
-                    y = startPos.y + vec_y;
+            const delta = pos.sub(this._touchStartPos);
+            // 手指移动的距离太小的话忽略
+            if (delta.lengthSqr() > 25) {
+                // 这里是合并成一个顺滑的图形  详细见下面内容
+                // 优化篇原文:  https://mp.weixin.qq.com/s/4lFv9p346yEg_PSOwN0WKw  
+                // 优化篇视频:  https://b23.tv/BV1GV411d7eq  
+                const startPos = this._touchStartPos;
+                for (let index = 0; index < count; index++) {
+                    const r = 2 * Math.PI * index / count;
+                    let vec_x = DIG_RADIUS * Math.cos(r);
+                    let vec_y = DIG_RADIUS * Math.sin(r);
+                    let x, y;
+                    if (delta.dot(cc.v2(vec_x, vec_y)) > 0) {
+                        x = pos.x + vec_x;
+                        y = pos.y + vec_y;
+                    } else {
+                        x = startPos.x + vec_x;
+                        y = startPos.y + vec_y;
+                    }
+                    regions.push(this._optimizePoint([x, y]));
                 }
-                regions.push(this._optimizePoint([x, y]));
+                this._touchStartPos = pos;
             }
-
         }
 
-        this.polyEx.pushCommand('polyDifference', [regions, this.graphics]);
+        if (regions.length)
+            this.polyEx.pushCommand('polyDifference', [regions, this.graphics]);
+    }
 
+    private _touchEnd(touch: cc.Touch) {
+        this._touchStartPos = undefined;
     }
 
     reset() {
@@ -103,11 +124,7 @@ export default class Main_poly extends cc.Component {
         this.polyEx.polyDifference([], this.graphics);
 
         this.node_ball.setPosition(0, 500);
-
     }
-
-
-
 
     private debug() {
         cc.debug.setDisplayStats(!cc.debug.isDisplayStats());
@@ -120,3 +137,25 @@ export default class Main_poly extends cc.Component {
 
 }
 // 欢迎关注微信公众号[白玉无冰]
+
+/**
+█████████████████████████████████████
+█████████████████████████████████████
+████ ▄▄▄▄▄ █▀█ █▄██▀▄ ▄▄██ ▄▄▄▄▄ ████
+████ █   █ █▀▀▀█ ▀▄▀▀▀█▄▀█ █   █ ████
+████ █▄▄▄█ █▀ █▀▀▀ ▀▄▄ ▄ █ █▄▄▄█ ████
+████▄▄▄▄▄▄▄█▄▀ ▀▄█ ▀▄█▄▀ █▄▄▄▄▄▄▄████
+████▄▄  ▄▀▄▄ ▄▀▄▀▀▄▄▄ █ █ ▀ ▀▄█▄▀████
+████▀ ▄  █▄█▀█▄█▀█  ▀▄ █ ▀ ▄▄██▀█████
+████ ▄▀▄▄▀▄ █▄▄█▄ ▀▄▀ ▀ ▀ ▀▀▀▄ █▀████
+████▀ ██ ▀▄ ▄██ ▄█▀▄ ██▀ ▀ █▄█▄▀█████
+████   ▄██▄▀ █▀▄▀▄▀▄▄▄▄ ▀█▀ ▀▀ █▀████
+████ █▄ █ ▄ █▀ █▀▄█▄▄▄▄▀▄▄█▄▄▄▄▀█████
+████▄█▄█▄█▄█▀ ▄█▄   ▀▄██ ▄▄▄ ▀   ████
+████ ▄▄▄▄▄ █▄██ ▄█▀  ▄   █▄█  ▄▀█████
+████ █   █ █ ▄█▄ ▀  ▀▀██ ▄▄▄▄ ▄▀ ████
+████ █▄▄▄█ █ ▄▄▀ ▄█▄█▄█▄ ▀▄   ▄ █████
+████▄▄▄▄▄▄▄█▄██▄▄██▄▄▄█████▄▄█▄██████
+█████████████████████████████████████
+█████████████████████████████████████
+ */

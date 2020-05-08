@@ -228,3 +228,17 @@ export default class Main extends cc.Component {
 
 }
 // 欢迎关注微信公众号[白玉无冰]
+
+/** 
+
+优化篇原文:  https://mp.weixin.qq.com/s/4lFv9p346yEg_PSOwN0WKw  
+优化篇视频:  https://b23.tv/BV1GV411d7eq  
+
+实现篇:  https://mp.weixin.qq.com/s/Xcf-WPaqiIo-ef6O_IITFg   
+实现篇视频讲解  https://b23.tv/BV1jz411z7w1   
+在线体验:  http://lamyoung.gitee.io/web/dig_hole/   
+
+qq 交流群
+859642112
+
+*/
