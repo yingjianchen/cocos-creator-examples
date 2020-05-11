@@ -9,6 +9,8 @@ Main_poly.fire
 
 ![](./../img/dig_hole_poly.gif)
 
+图文讲解: https://mp.weixin.qq.com/s/jxKeM2Ah5UHlGTryksdr6Q   
+
 ---
 
 ## 链条挖洞 
