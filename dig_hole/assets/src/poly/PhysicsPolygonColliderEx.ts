@@ -20,12 +20,16 @@
 
 */
 
+const DIG_OPTIMIZE_SIZE = 1;
+
 const { ccclass, property, menu, requireComponent } = cc._decorator;
 
 @ccclass
 @menu("i18n:MAIN_MENU.component.physics/Collider/PolygonEX-lamyoung.com")
 @requireComponent(cc.RigidBody)
 export default class PhysicsPolygonColliderEx extends cc.Component {
+
+
 
     public get polys() {
         return this._polys.map((v) => { return this._convertClipperPathToVecArray(v) });
@@ -49,7 +53,8 @@ export default class PhysicsPolygonColliderEx extends cc.Component {
         // if (poly.length < 3) return;
 
         // 计算新的多边形
-        const cpr = new ClipperLib.Clipper();
+        const cpr = new ClipperLib.Clipper(ClipperLib.Clipper.ioStrictlySimple); //ClipperLib.Clipper.ioStrictlySimple | ClipperLib.Clipper.ioPreserveCollinear
+        // cpr.PreserveCollinear = true;
         const subj_paths = this._polys;
         const clip_paths = [this._convertVecArrayToClipperPath(poly)]
         cpr.AddPaths(subj_paths, ClipperLib.PolyType.ptSubject, true);
@@ -66,9 +71,13 @@ export default class PhysicsPolygonColliderEx extends cc.Component {
         ctx && ctx.clear(true);
         let _physicsPolygonColliders_count = 0;
         for (const expolygon of solution_expolygons) {
+            // const outers = ClipperLib.Clipper.SimplifyPolygon(expolygon.outer,ClipperLib.PolyFillType.pftEvenOdd);
+            // cc.log(outer,"outer",expolygon.outer)
             const countor = this._convertClipperPathToPoly2triPoint(expolygon.outer);
-            const swctx = new poly2tri.SweepContext(countor);
-            const holes = expolygon.holes.map(h => { return this._convertClipperPathToPoly2triPoint(h) });
+            if (countor.length < 2) continue;
+            const swctx = new poly2tri.SweepContext(countor, { cloneArrays: true });
+            // const exclude = countor;
+            const holes = expolygon.holes.map(h => { return this._convertClipperPathToPoly2triPoint(h, countor) });
             try {
                 // 防止 addhole 失败 使用try
                 swctx.addHoles(holes);
@@ -99,8 +108,8 @@ export default class PhysicsPolygonColliderEx extends cc.Component {
                     }
                 }
             } catch (e) {
-                // console.error('polyDifference error', _physicsPolygonColliders_count);
-                // console.error(e);
+                console.error('polyDifference poly2tri error', _physicsPolygonColliders_count, expolygon);
+                console.error(e);
                 continue;
             }
         }
@@ -134,8 +143,25 @@ export default class PhysicsPolygonColliderEx extends cc.Component {
         return poly.map((p) => { return cc.v2(p.X, p.Y) });
     }
 
-    private _convertClipperPathToPoly2triPoint(poly: { X: number, Y: number }[]) {
-        return poly.map((p) => { return new poly2tri.Point(p.X, p.Y) });
+    private _convertClipperPathToPoly2triPoint(poly: { X: number, Y: number }[], exclude: poly2tri.Point[] = []): poly2tri.Point[] {
+        // return poly.map((p) => { return new poly2tri.Point(p.X, p.Y) });
+        const newPos: poly2tri.Point[] = [];
+        poly.forEach((p, i) => {
+            const p_now = new poly2tri.Point(p.X, p.Y)
+            const isIn = exclude.some((e_p) => {
+                if (e_p.equals(p_now)) {
+                    return true;
+                }
+            })
+            if (!isIn) {
+                newPos.push(p_now);
+                exclude.push(p_now);
+            }
+        })
+        if (newPos.length > 2)
+            return newPos;
+        else
+            return [];
     }
 
 }
