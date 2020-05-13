@@ -50,8 +50,6 @@ export default class Main_poly extends cc.Component {
         this.graphics.node.on(cc.Node.EventType.TOUCH_MOVE, this._touchMove, this);
         this.graphics.node.on(cc.Node.EventType.TOUCH_END, this._touchEnd, this);
         this.graphics.node.on(cc.Node.EventType.TOUCH_CANCEL, this._touchEnd, this);
-
-        this.graphics.fillColor = cc.Color.ORANGE;
     }
 
     start() {

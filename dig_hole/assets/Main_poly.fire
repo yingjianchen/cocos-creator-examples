@@ -198,7 +198,7 @@
       "array": [
         0,
         0,
-        334.28580586079335,
+        333.4197804570089,
         0,
         0,
         0,
@@ -529,9 +529,9 @@
     "_lineCap": 0,
     "_fillColor": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 108,
+      "g": 68,
+      "b": 35,
       "a": 255
     },
     "_miterLimit": 10,
@@ -545,12 +545,6 @@
       "__id__": 8
     },
     "_enabled": true,
-    "tag": 0,
-    "_density": 1,
-    "_sensor": false,
-    "_friction": 0,
-    "_restitution": 0,
-    "body": null,
     "_id": "dduZld3rlBmJAjlm1jnxTf"
   },
   {

@@ -98,17 +98,19 @@ export default class PhysicsPolygonColliderEx extends cc.Component {
                         ctx.fill();
                     }
                 }
-
-                this._physicsPolygonColliders.slice(_physicsPolygonColliders_count).forEach((v => {
-                    if (v.points.length) {
-                        v.points.length = 0;
-                        v.apply();
-                    }
-                }));
-            } catch{
-
+            } catch (e) {
+                // console.error('polyDifference error', _physicsPolygonColliders_count);
+                // console.error(e);
+                continue;
             }
         }
+
+        this._physicsPolygonColliders.slice(_physicsPolygonColliders_count).forEach((v => {
+            if (v.points.length) {
+                v.points.length = 0;
+                v.apply();
+            }
+        }));
     }
 
     lateUpdate(dt: number) {
