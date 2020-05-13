@@ -46,14 +46,18 @@ export default class Main_poly extends cc.Component {
         // 每次更新物理系统处理位置的迭代次数，默认为 10
         cc.PhysicsManager.POSITION_ITERATIONS = 8;
 
-        this.graphics.node.on(cc.Node.EventType.TOUCH_START, this._touchStart, this);
-        this.graphics.node.on(cc.Node.EventType.TOUCH_MOVE, this._touchMove, this);
-        this.graphics.node.on(cc.Node.EventType.TOUCH_END, this._touchEnd, this);
-        this.graphics.node.on(cc.Node.EventType.TOUCH_CANCEL, this._touchEnd, this);
+        this.node_dirty.on(cc.Node.EventType.TOUCH_START, this._touchStart, this);
+        this.node_dirty.on(cc.Node.EventType.TOUCH_MOVE, this._touchMove, this);
+        this.node_dirty.on(cc.Node.EventType.TOUCH_END, this._touchEnd, this);
+        this.node_dirty.on(cc.Node.EventType.TOUCH_CANCEL, this._touchEnd, this);
+
+        this.graphics = this.node_dirty.getComponent(cc.Mask)['_graphics'];
     }
 
     start() {
-        this.reset();
+        this.scheduleOnce(() => {
+            this.reset();
+        }, 0.01);
     }
 
     private _optimizePoint(point) {
@@ -120,7 +124,6 @@ export default class Main_poly extends cc.Component {
             [cc.v2(-375, -667), cc.v2(-375, 500), cc.v2(-50, 500), cc.v2(-40, 450), cc.v2(40, 450), cc.v2(50, 500), cc.v2(375, 500), cc.v2(375, -667)]
         ]);
         this.polyEx.polyDifference([], this.graphics);
-
         this.node_ball.setPosition(0, 500);
     }
 
