@@ -1,33 +1,21 @@
 
-# 挖洞效果
+# 挖洞效果-3d 效果
 
 cocos creator v2.3.3  
 
-## 多边形刚体挖洞
+![](./../img/dig_hole_3d.gif)
 
-Main_poly.fire
+代码由qq群(859642112)的大佬提供 `@云谷` ， 思路由 `@菠萝菠萝` 提供！感谢小伙伴们的分享。    
 
-![](./../img/dig_hole_poly.gif)
-
-填坑篇:  https://mp.weixin.qq.com/s/bL4VTlmzAO7ZzxB9NZ-R8A   
-图文讲解: https://mp.weixin.qq.com/s/jxKeM2Ah5UHlGTryksdr6Q   
+由`@白玉无冰`整理～   
 
 ---
 
-## 链条挖洞 
+前篇基础～   
 
-Main.fire
-
-物理挖洞！涂抹地形! 优化篇来了！图文！视频！源码！通通来了！
-
-优化篇原文:  https://mp.weixin.qq.com/s/4lFv9p346yEg_PSOwN0WKw  
-优化篇视频:  https://b23.tv/BV1GV411d7eq  
-
-实现篇:  https://mp.weixin.qq.com/s/Xcf-WPaqiIo-ef6O_IITFg   
-实现篇视频讲解  https://b23.tv/BV1jz411z7w1   
-在线体验:  http://lamyoung.gitee.io/web/dig_hole/   
-
-![](./../img/dig_hole.gif)
+填坑篇:  https://mp.weixin.qq.com/s/bL4VTlmzAO7ZzxB9NZ-R8A   
+图文讲解: https://mp.weixin.qq.com/s/jxKeM2Ah5UHlGTryksdr6Q   
+meshTexture: https://mp.weixin.qq.com/s/r1IEcFXdy4O2Fn4IPs1m_w   
 
 
 ---

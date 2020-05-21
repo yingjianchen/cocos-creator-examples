@@ -16,7 +16,8 @@ qq 交流群: 859642112
 ## [dig_hole](./dig_hole) 
 
 cocos creator v2.3.3  
-
+填坑篇:  https://mp.weixin.qq.com/s/bL4VTlmzAO7ZzxB9NZ-R8A   
+图文讲解: https://mp.weixin.qq.com/s/jxKeM2Ah5UHlGTryksdr6Q   
 
 ### 多边形刚体挖洞
 
