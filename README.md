@@ -4,6 +4,8 @@ cocos creator 一些使用实例 (刚体挖洞/流体效果/shader)
 
 欢迎关注微信公众号 `白玉无冰`
 
+导航：https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ
+
 ![](./img/about.jpg)
 
 
@@ -13,11 +15,20 @@ github: https://github.com/baiyuwubing
 qq 交流群: 859642112  
 
 
+## [dig_hole_3d](./dig_hole_3d) 
+
+cocos creator v2.3.3   
+
+挖洞效果-3d 效果
+
+图文：https://mp.weixin.qq.com/s/LJCdpdiRn9vZe83pf3ysUg  
+
+![](./img/dig_hole_3d.gif)   
+
+
 ## [dig_hole](./dig_hole) 
 
 cocos creator v2.3.3  
-填坑篇:  https://mp.weixin.qq.com/s/bL4VTlmzAO7ZzxB9NZ-R8A   
-图文讲解: https://mp.weixin.qq.com/s/jxKeM2Ah5UHlGTryksdr6Q   
 
 ### 多边形刚体挖洞
 
@@ -25,6 +36,7 @@ Main_poly.fire
 
 ![](./img/dig_hole_poly.gif)
 
+填坑篇:  https://mp.weixin.qq.com/s/bL4VTlmzAO7ZzxB9NZ-R8A   
 图文讲解: https://mp.weixin.qq.com/s/jxKeM2Ah5UHlGTryksdr6Q   
 
 ### 链条挖洞 

@@ -5,6 +5,8 @@ cocos creator v2.3.3
 
 ![](./../img/dig_hole_3d.gif)
 
+图文：https://mp.weixin.qq.com/s/LJCdpdiRn9vZe83pf3ysUg
+
 代码由qq群(859642112)的大佬提供 `@云谷` ， 思路由 `@菠萝菠萝` 提供！感谢小伙伴们的分享。    
 
 由`@白玉无冰`整理～   
