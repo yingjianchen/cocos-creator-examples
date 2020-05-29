@@ -15,6 +15,23 @@ github: https://github.com/baiyuwubing
 qq 交流群: 859642112  
 
 
+
+
+## [graphics_sprite](./graphics_sprite) 
+
+画线-纹理
+
+cocos creator v2.3.3   
+
+`cc.Graphics` + `cc.Sprite` 实现画线纹理。   
+
+图文: https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ    
+
+![](./img/graphics_sprite.gif)
+
+
+前置教程: [初探精灵中的网格渲染模式 ！](https://mp.weixin.qq.com/s/2FcixeoV-Fg-7OodILECeg)  
+
 ## [dig_hole_3d](./dig_hole_3d) 
 
 cocos creator v2.3.3   
