@@ -54,7 +54,7 @@ export default class GraphicsSpriteMesh extends cc.Component {
                     const p_l_b = p_pre.sub(cross_dir); // 左下
 
                     const uv_mul = 50;
-                    const i_offset = vertices.x.length;
+                    let i_offset = vertices.x.length;
                     vertices.x.push(p_r_t.x, p_r_b.x, p_l_t.x, p_l_b.x);
                     vertices.y.push(p_r_t.y, p_r_b.y, p_l_t.y, p_l_b.y);
                     vertices.nu.push(p_r_t.x / uv_mul, p_r_b.x / uv_mul, p_l_t.x / uv_mul, p_l_b.x / uv_mul);
@@ -66,8 +66,30 @@ export default class GraphicsSpriteMesh extends cc.Component {
                     vertices.triangles.push(i_offset + 1);
                     vertices.triangles.push(i_offset + 2);
                     vertices.triangles.push(i_offset + 3);
+
+                    //画圆
+                    const count = 12;
+                    i_offset = vertices.x.length;
+                    vertices.x.push(p.x);
+                    vertices.y.push(p.y);
+                    vertices.nu.push(p.x / uv_mul);
+                    vertices.nv.push(p.y / uv_mul);
+                    for (let index3 = 0; index3 < count; index3++) {
+                        const r = 2 * Math.PI * index3 / count;
+                        const pos_circle = cc.v2(w / 2 * Math.cos(r), w / 2 * Math.sin(r)).addSelf(p);
+                        vertices.x.push(pos_circle.x);
+                        vertices.y.push(pos_circle.y);
+                        vertices.nu.push(pos_circle.x / uv_mul);
+                        vertices.nv.push(pos_circle.y / uv_mul);
+                        if (index3 === 0) {
+                            vertices.triangles.push(i_offset, i_offset + 1 + index3, i_offset + count);
+                        } else {
+                            vertices.triangles.push(i_offset, i_offset + 1 + index3, i_offset + index3);
+                        }
+                    }
                 }
             }
+            // cc.log(vertices);
             this.sprite['setVertsDirty']();
             // this.graphics.stroke();
         } else {
