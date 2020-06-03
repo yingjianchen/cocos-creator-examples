@@ -5,7 +5,9 @@ cocos creator v2.3.3
 
 `cc.Graphics` + `cc.Sprite` 实现画线纹理。   
 
-图文: https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ    
+图文:  
+part-1:  https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ    
+part-2:  https://mp.weixin.qq.com/s/xniwz-a_FI0snWqqPd2NOg    
 
 ![](./../img/graphics_sprite.gif)
 

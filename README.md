@@ -1,12 +1,12 @@
 # cocos-creator-examples
 
-cocos creator 一些使用实例 (刚体挖洞/流体效果/shader)
+cocos creator 一些使用实例 (刚体挖洞/流体效果/shader/纹理处理)   
 
-欢迎关注微信公众号 `白玉无冰`
+欢迎关注微信公众号 `白玉无冰`  
 
 导航：https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ
 
-![](./img/about.jpg)
+![](./img/about.jpg)  
 
 
 author: http://lamyoung.com/  
@@ -14,6 +14,10 @@ B站视频: https://space.bilibili.com/1756070/video
 github: https://github.com/baiyuwubing  
 qq 交流群: 859642112  
 
+
+## 最新上线简单的沙雕小游戏
+
+![](./img/qiuqiu.jpg)  
 
 
 
@@ -25,7 +29,9 @@ cocos creator v2.3.3
 
 `cc.Graphics` + `cc.Sprite` 实现画线纹理。   
 
-图文: https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ    
+图文:  
+part-1:  https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ    
+part-2:  https://mp.weixin.qq.com/s/xniwz-a_FI0snWqqPd2NOg    
 
 ![](./img/graphics_sprite.gif)
 
@@ -235,6 +241,15 @@ cocos creator v2.0.8
 cocos creator v2.0.8 
 
 ---
+
+
+## 打赏奶茶🥤鸡腿🍗  
+
+### 微信
+![](./img/wx.jpeg)
+
+### 支付宝
+![](./img/alipay.jpg)
 
 
 
