@@ -21,6 +21,17 @@ qq 交流群: 859642112
 
 
 
+## [color_Assembler2D](./color_Assembler2D) 
+
+渐变色图片/文字
+
+cocos creator v2.3.3   
+
+图文:
+https://mp.weixin.qq.com/s/8pMNeD78fBvF480xiGJCVQ
+
+![](./img/color_Assembler2D.gif)
+
 ## [graphics_sprite](./graphics_sprite) 
 
 画线-纹理

@@ -3,7 +3,10 @@
 
 cocos creator v2.3.3   
 
- 
+
+图文:
+https://mp.weixin.qq.com/s/8pMNeD78fBvF480xiGJCVQ
+
 
 ![](./../img/color_Assembler2D.gif)
 
