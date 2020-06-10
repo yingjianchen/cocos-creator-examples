@@ -15,7 +15,7 @@ github: https://github.com/baiyuwubing
 qq 交流群: 859642112  
 
 
-## 最新上线简单的沙雕小游戏
+## 最新上线简单的沙雕小游戏(如果有帮助，随意玩两局，当是打赏)
 
 ![](./img/qiuqiu.jpg)  
 
@@ -39,6 +39,15 @@ https://mp.weixin.qq.com/s/8pMNeD78fBvF480xiGJCVQ
 cocos creator v2.3.3   
 
 `cc.Graphics` + `cc.Sprite` 实现画线纹理。   
+
+### `main_rope.fire` 有方向的纹理，类似绳子。   
+
+图文:   
+part-3: https://mp.weixin.qq.com/s/QvJ2DHFhUxO3doNviCqBIg   
+
+![](./img/graphics_sprite_rope.gif)
+
+### `main.fire` 普通纹理。
 
 图文:  
 part-1:  https://mp.weixin.qq.com/s/ozXjdpyid5f2Xwo7uo0MuQ    

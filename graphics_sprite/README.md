@@ -7,6 +7,9 @@ cocos creator v2.3.3
 
 ## `main_rope.fire` 有方向的纹理，类似绳子。   
 
+图文:   
+part-3: https://mp.weixin.qq.com/s/QvJ2DHFhUxO3doNviCqBIg   
+
 ![](./../img/graphics_sprite_rope.gif)
 
 ## `main.fire` 普通纹理。
