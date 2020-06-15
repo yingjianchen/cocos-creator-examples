@@ -86,6 +86,9 @@
 		if (typeof (document) !== "undefined") window.ClipperLib = ClipperLib;
 		else self['ClipperLib'] = ClipperLib;
 	}
+	// 挂载 window
+	window.ClipperLib = ClipperLib;
+
 	var navigator_appName;
 	if (!isNode)
 	{

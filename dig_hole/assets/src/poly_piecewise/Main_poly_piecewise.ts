@@ -1,9 +1,11 @@
 // author: http://lamyoung.com/
 
-import PhysicsPolygonColliderEx from "./PhysicsPolygonColliderEx";
+import PhysicsPolygonColliderEx_piecewise from "./PhysicsPolygonColliderEx_piecewise";
 
 // 挖洞圆半径
 const DIG_RADIUS = 50;
+// 分块半径(小于挖洞)
+const PICE_RADIUS = 40;
 // 圆的边的数量
 const DIG_FRAGMENT = 12;
 // 归一到单位化
@@ -13,7 +15,7 @@ const DIG_OPTIMIZE_SIZE = 1;
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class Main_poly extends cc.Component {
+export default class Main_poly_piecewise extends cc.Component {
 
     @property(cc.Graphics)
     graphics: cc.Graphics = null;
@@ -27,8 +29,8 @@ export default class Main_poly extends cc.Component {
     @property(cc.Node)
     node_qrCode: cc.Node = null;
 
-    @property(PhysicsPolygonColliderEx)
-    polyEx: PhysicsPolygonColliderEx = null;
+    @property(PhysicsPolygonColliderEx_piecewise)
+    polyEx: PhysicsPolygonColliderEx_piecewise = null;
 
     onLoad() {
         cc.macro.ENABLE_MULTI_TOUCH = false;
@@ -75,14 +77,32 @@ export default class Main_poly extends cc.Component {
     private _touchMove(touch: cc.Touch) {
         const regions: cc.Vec2[] = [];
         const pos = this.graphics.node.convertToNodeSpaceAR(touch.getLocation());
-
+        let xMin = Number.MAX_SAFE_INTEGER, xMax = Number.MIN_SAFE_INTEGER, yMin = Number.MAX_SAFE_INTEGER, yMax = Number.MIN_SAFE_INTEGER;
         const count = DIG_FRAGMENT;
+        const regions_push = (x, y) => {
+            const p = this._optimizePoint([x, y]);
+            xMin = p.x < xMin ? p.x : xMin;
+            yMin = p.y < yMin ? p.y : yMin;
+            xMax = p.x > xMax ? p.x : xMax;
+            yMax = p.y > yMax ? p.y : yMax;
+            regions.push(p);
+        }
+        // if (!this._touchStartPos || (pos.sub(this._touchStartPos).lengthSqr() > 0)) {
+            // for (let index = 0; index < count; index++) {
+            //     const r = 2 * Math.PI * index / count;
+            //     const x = pos.x + DIG_RADIUS * Math.cos(r);
+            //     const y = pos.y + DIG_RADIUS * Math.sin(r);
+            //     regions_push(x, y);
+            // }
+        //     this._touchStartPos = pos;
+        // }
+
         if (!this._touchStartPos) {
             for (let index = 0; index < count; index++) {
                 const r = 2 * Math.PI * index / count;
                 const x = pos.x + DIG_RADIUS * Math.cos(r);
                 const y = pos.y + DIG_RADIUS * Math.sin(r);
-                regions.push(this._optimizePoint([x, y]));
+                regions_push(x, y);
             }
             this._touchStartPos = pos;
         } else {
@@ -105,25 +125,44 @@ export default class Main_poly extends cc.Component {
                         x = startPos.x + vec_x;
                         y = startPos.y + vec_y;
                     }
-                    regions.push(this._optimizePoint([x, y]));
+                    regions_push(x, y);
                 }
                 this._touchStartPos = pos;
             }
         }
 
-        if (regions.length)
-            this.polyEx.pushCommand('polyDifference', [regions, this.graphics]);
+        if (regions.length) {
+            const rect_r = cc.Rect.fromMinMax(cc.v2(xMin, yMin), cc.v2(xMax, yMax));
+            for (let index = 0; index < this._rects.length; index++) {
+                const rect = this._rects[index];
+                if (rect.intersects(rect_r)) {
+                    this.polyEx.pushCommand('polyDifference', [regions, index])
+                }
+            }
+        }
     }
 
     private _touchEnd(touch: cc.Touch) {
         this._touchStartPos = undefined;
     }
 
+    private _rects: cc.Rect[] = [];
     reset() {
-        this.polyEx.init([
-            [cc.v2(-375, -667), cc.v2(-375, 500), cc.v2(-50, 500), cc.v2(-40, 450), cc.v2(40, 450), cc.v2(50, 500), cc.v2(375, 500), cc.v2(375, -667)]
-        ]);
-        this.polyEx.polyDifference([], this.graphics);
+        this._rects = [];
+        const polys: cc.Vec2[][][] = [];
+        const totalRow = 12;
+        const totalCol = 10;
+        for (let index = 0; index < totalRow * totalCol; index++) {
+            const row = Math.floor(index / totalCol);
+            const col = index % totalCol;
+            const y = row * PICE_RADIUS * 2 - totalRow * PICE_RADIUS;
+            const x = col * PICE_RADIUS * 2 - totalCol * PICE_RADIUS;
+            this._rects[index] = cc.rect(x, y, PICE_RADIUS * 2, PICE_RADIUS * 2);
+            const { xMin, xMax, yMin, yMax } = this._rects[index];
+            polys[index] = [[cc.v2(xMin, yMin), cc.v2(xMin, yMax), cc.v2(xMax, yMax), cc.v2(xMax, yMin)]]
+        }
+
+        this.polyEx.init(polys, this.graphics);
         this.node_ball.setPosition(0, 500);
     }
 
@@ -138,9 +177,7 @@ export default class Main_poly extends cc.Component {
 
 }
 // 欢迎关注微信公众号[白玉无冰]
-// 图文讲解
-// https://mp.weixin.qq.com/s/jxKeM2Ah5UHlGTryksdr6Q
-// https://mp.weixin.qq.com/s/bL4VTlmzAO7ZzxB9NZ-R8A
+
 /**
 █████████████████████████████████████
 █████████████████████████████████████
