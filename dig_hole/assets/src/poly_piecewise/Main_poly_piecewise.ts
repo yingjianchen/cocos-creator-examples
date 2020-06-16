@@ -87,16 +87,7 @@ export default class Main_poly_piecewise extends cc.Component {
             yMax = p.y > yMax ? p.y : yMax;
             regions.push(p);
         }
-        // if (!this._touchStartPos || (pos.sub(this._touchStartPos).lengthSqr() > 0)) {
-            // for (let index = 0; index < count; index++) {
-            //     const r = 2 * Math.PI * index / count;
-            //     const x = pos.x + DIG_RADIUS * Math.cos(r);
-            //     const y = pos.y + DIG_RADIUS * Math.sin(r);
-            //     regions_push(x, y);
-            // }
-        //     this._touchStartPos = pos;
-        // }
-
+ 
         if (!this._touchStartPos) {
             for (let index = 0; index < count; index++) {
                 const r = 2 * Math.PI * index / count;

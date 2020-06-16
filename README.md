@@ -73,9 +73,15 @@ cocos creator v2.3.3
 
 cocos creator v2.3.3  
 
+### 分块挖洞
+
+`Main_poly_piecewise.fire`
+
+![](./img/dig_hole_poly_piece.gif)
+
 ### 多边形刚体挖洞
 
-Main_poly.fire
+`Main_poly.fire`
 
 ![](./img/dig_hole_poly.gif)
 
@@ -84,7 +90,7 @@ Main_poly.fire
 
 ### 链条挖洞 
 
-Main.fire
+`Main.fire`
 
 物理挖洞！涂抹地形! 优化篇来了！图文！视频！源码！通通来了！
 

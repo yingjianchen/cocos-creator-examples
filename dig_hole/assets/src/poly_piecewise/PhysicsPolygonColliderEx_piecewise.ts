@@ -71,8 +71,6 @@ export default class PhysicsPolygonColliderEx_piecewise extends cc.Component {
         cpr.Execute(ClipperLib.ClipType.ctDifference, solution, subject_fillType, clip_fillType);
         this._polys[index] = solution || [];
         // cc.log(solution, index, 'polyDifference');
-
-        // this.draw();
     }
 
     private draw() {
@@ -101,7 +99,6 @@ export default class PhysicsPolygonColliderEx_piecewise extends cc.Component {
                     else ctx.lineTo(p.x, p.y);
                 }
                 ctx.close();
-                // ctx.fill();
             }
         }
         ctx.fill();
@@ -111,8 +108,6 @@ export default class PhysicsPolygonColliderEx_piecewise extends cc.Component {
                 v.apply();
             }
         }));
-
-        // cc.log(`draw--->`, this._polys);
     }
 
     lateUpdate(dt: number) {
