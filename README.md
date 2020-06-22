@@ -77,6 +77,8 @@ cocos creator v2.3.3
 
 `Main_poly_piecewise.fire`
 
+图文: https://mp.weixin.qq.com/s/5JbIX7kHyZoGvJjGrXaZug   
+
 ![](./img/dig_hole_poly_piece.gif)
 
 ### 多边形刚体挖洞
@@ -107,6 +109,10 @@ cocos creator v2.3.3
 ## [shader_animation](./shader_animation) 
 
 cocos creator v2.3.3  
+
+### 波纹式的摇摆卷动(旗子/水纹波动效果)
+
+![](./img/shader_animation_sin.gif)  
 
 ### loading 动画
 

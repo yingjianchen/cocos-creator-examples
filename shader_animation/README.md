@@ -4,6 +4,11 @@
 
 cocos creator v2.3.3  
 
+## 波纹式的摇摆卷动(旗子/水纹波动效果)
+
+![](./../img/shader_animation_sin.gif)  
+
+
 ## loading 动画
 
 [图文讲解](https://mp.weixin.qq.com/s/QhKzmtpwiQgOzsGPcBHSJQ)   
