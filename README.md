@@ -15,10 +15,17 @@ github: https://github.com/baiyuwubing
 qq 交流群: 859642112  
 
 
-## 最新上线简单的沙雕小游戏(如果有帮助，随意玩两局，当是打赏)
+## 无聊的小游戏(如果有帮助，随意玩两局，当是打赏)
 
 ![](./img/qiuqiu.jpg)  
 
+## [bg_scroll_3d](./bg_scroll_3d) 
+
+滚动背景图3d效果
+
+cocos creator v2.3.3   
+
+![](./img/bg_scroll_3d.gif)
 
 
 ## [color_Assembler2D](./color_Assembler2D) 
@@ -31,6 +38,8 @@ cocos creator v2.3.3
 https://mp.weixin.qq.com/s/8pMNeD78fBvF480xiGJCVQ
 
 ![](./img/color_Assembler2D.gif)
+
+
 
 ## [graphics_sprite](./graphics_sprite) 
 
