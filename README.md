@@ -25,6 +25,9 @@ qq 交流群: 859642112
 
 cocos creator v2.3.3   
 
+图文:
+https://mp.weixin.qq.com/s/fJxE-Z0BEiQgAhFoJeHjlw
+
 ![](./img/bg_scroll_3d.gif)
 
 
