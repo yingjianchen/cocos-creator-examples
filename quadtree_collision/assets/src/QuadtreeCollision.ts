@@ -10,23 +10,25 @@ export default class QuadtreeCollision {
         const ret: { retrieve: cc.Collider[], contacts: cc.Collider[] } = { retrieve: [], contacts: [] };
 
         if (this._tree) {
+            // 四叉树清理
             this._tree.clear();
             const collisionManager = cc.director.getCollisionManager();
             collisionManager['updateCollider'](testCollider);
-            const allRect = [];
             for (let i = 0, l = colliders.length; i < l; i++) {
                 const collider = colliders[i];
-                collider.node.color = cc.Color.WHITE;
+                // 更新碰撞体世界aabb
                 collisionManager['updateCollider'](collider);
                 const aabb = collider['world'].aabb;
                 const rect = { x: aabb.x, y: aabb.y, height: aabb.height, width: aabb.width, collider: collider };
+                // 四叉树插入
                 this._tree.insert(rect)
-                allRect.push(rect);
             }
-
+            // 四叉树抓出待检查的对象(属于那个块的所有节点)
             const retrieveObjects = this._tree.retrieve(testCollider['world'].aabb);
+
             retrieveObjects.forEach(element => {
                 ret.retrieve.push(element.collider);
+                // 抓出来后检查碰撞
                 if (testContact(element.collider, testCollider)) {
                     ret.contacts.push(element.collider);
                 }
@@ -39,17 +41,9 @@ export default class QuadtreeCollision {
 
 // 欢迎关注微信公众号[白玉无冰]
 
-
-function shouldCollide(c1, c2) {
-    let node1 = c1.node, node2 = c2.node;
-    let collisionMatrix = cc.game['collisionMatrix'];
-    return node1 !== node2 && collisionMatrix[node1.groupIndex][node2.groupIndex];
-}
-
-
 function testContact(collider1, collider2) {
-
-    if (!shouldCollide(collider1, collider2)) {
+    // 分组不通过
+    if (!cc.director.getCollisionManager()['shouldCollide'](collider1, collider2)) {
         return false;
     }
 
@@ -66,14 +60,11 @@ function testContact(collider1, collider2) {
 
     if (isCollider1Polygon && isCollider2Polygon) {
         return cc.Intersection.polygonPolygon(world1.points, world2.points);
-    }
-    else if (isCollider1Circle && isCollider2Circle) {
+    } else if (isCollider1Circle && isCollider2Circle) {
         return cc.Intersection.circleCircle(world1, world2);
-    }
-    else if (isCollider1Polygon && isCollider2Circle) {
+    } else if (isCollider1Polygon && isCollider2Circle) {
         return cc.Intersection.polygonCircle(world1.points, world2);
-    }
-    else if (isCollider1Circle && isCollider2Polygon) {
+    } else if (isCollider1Circle && isCollider2Polygon) {
         return cc.Intersection.polygonCircle(world2.points, world1);
     } else {
         // cc.errorID(6601, cc.js.getClassName(collider1), cc.js.getClassName(collider2));
