@@ -23,6 +23,7 @@ qq 交流群: 859642112
 ## [quadtree_collision](./quadtree_collision) 
 
 四叉树碰撞检测
+https://mp.weixin.qq.com/s/gkvOd11kbZYcKXkBc7V8kQ
 
 cocos creator v2.3.3   
 

@@ -4,8 +4,7 @@
 cocos creator v2.3.3   
 
 
-<!-- 图文:
-https://mp.weixin.qq.com/s/fJxE-Z0BEiQgAhFoJeHjlw -->
+https://mp.weixin.qq.com/s/gkvOd11kbZYcKXkBc7V8kQ
 
 
 ![](./../img/quadtree_collision.gif)
