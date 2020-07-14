@@ -20,6 +20,18 @@ qq 交流群: 859642112
 ![](./img/qiuqiu.jpg)  
 
 
+## [2.4.x](./2.4.x)
+
+cocos creator 2.4.x demo
+
+### demo01
+
+brightness/saturation/constrast 
+(亮度/饱和度/对比度 两种实现方式)
+
+![](./2.4.x/img/demo01.gif)  
+
+
 ## [quadtree_collision](./quadtree_collision) 
 
 四叉树碰撞检测
