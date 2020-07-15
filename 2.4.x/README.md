@@ -7,6 +7,8 @@ cocos creator 2.4.x demo
 brightness/saturation/constrast 
 (亮度/饱和度/对比度 两种实现方式)
 
+https://mp.weixin.qq.com/s/bKjJS3KX2rEI0F7_4QPJEw
+
 ![](./img/demo01.gif)  
 
 
