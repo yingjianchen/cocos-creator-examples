@@ -32,13 +32,61 @@ class PointsPolygonGizmo extends Editor.Gizmo {
         pressx = x;
         pressy = y;
         const target = this.target;
+        const node = this.node;
         const i = param.i;
         const type = param.type;
-        
-        Editor.log('onCreateMoveCallbacks start', x, y, event, param);
+        const vertexes = target.vertexes;
+
+        // Editor.log('---------------------------->')
+
+        // for (const key in this._view) {
+        //   const element = this._view[key];
+        //   if (typeof element === 'number')
+        //     Editor.log('this._view', key, element);
+        // }
+
+        // Editor.log('---------------------------->')
+
+
+        // for (const key in this) {
+        //   const element = this[key];
+        //   // if (typeof element === 'number')
+        //   Editor.log('this', key, element);
+        // }
+
+        // Editor.log('_lastMapping', this._lastMapping.x, this._lastMapping.y);
+
+        // Editor.log('---------------------------->')
+        // Editor.log('onCreateMoveCallbacks start', x, y, i, type, this._view.scale);
+
+        // 转换坐标点到节点下
+        // 转换不正确，会有偏移 todo
+        // let position = cc.v2(x, y);
+        // position = Editor.GizmosUtils.snapPixelWihVec2(position);
+        // Editor.log('onCreateMoveCallbacks start snapPixelWihVec2', position.x, position.y);
+
+        // position = this._view.pixelToWorld(position);
+        // Editor.log('onCreateMoveCallbacks start pixelToWorld', position.x, position.y);
+
+        // position = node.convertToNodeSpaceAR(position);
+        // Editor.log('onCreateMoveCallbacks start convertToNodeSpaceAR', position.x, position.y);
+
+        // 转换不正确，会有偏移 先用中心点了
+        let position = cc.v2(0, 0);
 
         if (type === 'line') {
+          const len = vertexes.length;
+          vertexes[len] = cc.v2();
 
+          for (let index = len; index > (i + 1); index--) {
+            vertexes[index].x = vertexes[index - 1].x;
+            vertexes[index].y = vertexes[index - 1].y;
+          }
+          vertexes[i + 1].x = round(position.x);
+          vertexes[i + 1].y = round(-position.y);
+
+          // Editor.log('onCreateMoveCallbacks start line', position);
+          target.vertexes = vertexes;
         }
       },
 
@@ -55,15 +103,22 @@ class PointsPolygonGizmo extends Editor.Gizmo {
         const type = param.type;
         if (type === 'circle') {
           // 获取 gizmo 依附的组件
-          let target = this.target;
-          let scaleX = target.node.scaleX;
-          let scaleY = target.node.scaleY;
+          const target = this.target;
+          const scaleX = target.node.scaleX;
+          const scaleY = target.node.scaleY;
+          const angle = target.node.angle * Math.PI / 180;
+          const cos_angle = Math.cos(angle);
+          const sin_angle = Math.sin(angle);
+          dx = dx / this._view.scale / scaleX;
+          dy = dy / this._view.scale / scaleY;
+          const dx_new = dx * cos_angle + dy * sin_angle;
+          const dy_new = -dx * sin_angle + dy * cos_angle;
 
           if (!start_vertex) {
             start_vertex = target.vertexes[i].clone();
           }
-          target.vertexes[i].x = round(start_vertex.x + dx / this._view.scale / scaleX);
-          target.vertexes[i].y = round(start_vertex.y + dy / this._view.scale / scaleY);
+          target.vertexes[i].x = round(start_vertex.x + dx_new);
+          target.vertexes[i].y = round(start_vertex.y + dy_new);
           target.vertexes = target.vertexes;
           // this.adjustValue(target);
         }
@@ -95,7 +150,6 @@ class PointsPolygonGizmo extends Editor.Gizmo {
     this._tool = this._root.group();
     const target = this.target;
 
-
     const circles = [];
     const lines = [];
 
@@ -123,11 +177,11 @@ class PointsPolygonGizmo extends Editor.Gizmo {
       let line = lines[i];
       if (!line) {
         lines[i] = line = this._tool.line()
-          .stroke({ color: '#7fc97a66', width: 5 })
+          .stroke({ color: '#7fc97a66', width: 8 })
         // 设置鼠标样式
         // .style('cursor', 'move')
         // 注册点击事件
-        this.registerMoveSvg(line, line, { cursor: 'pointer' });
+        this.registerMoveSvg(line, line, { cursor: 'pointer', ignoreWhenHoverOther: true });
       }
       line.i = i;
       line.type = 'line';

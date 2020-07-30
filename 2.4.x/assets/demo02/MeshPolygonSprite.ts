@@ -90,6 +90,7 @@ export default class MeshPolygonSprite extends cc.Component {
     }
 
     private _updateMesh() {
+        
         // cc.log('_updateMesh')
         let mesh = this._meshCache[this.vertexes.length];
         if (!mesh) {
