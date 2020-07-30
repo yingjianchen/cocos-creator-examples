@@ -28,6 +28,7 @@ class PointsPolygonGizmo extends Editor.Gizmo {
        * @param event mousedown dom event
        */
       start: (x, y, event, param) => {
+        y = this._view.offsetHeight - y;
         start_vertex = null;
         pressx = x;
         pressy = y;
@@ -61,18 +62,15 @@ class PointsPolygonGizmo extends Editor.Gizmo {
 
         // 转换坐标点到节点下
         // 转换不正确，会有偏移 todo
-        // let position = cc.v2(x, y);
-        // position = Editor.GizmosUtils.snapPixelWihVec2(position);
+        let position = cc.v2(x, y);
+        position = Editor.GizmosUtils.snapPixelWihVec2(position);
         // Editor.log('onCreateMoveCallbacks start snapPixelWihVec2', position.x, position.y);
 
-        // position = this._view.pixelToWorld(position);
+        position = this._view.pixelToWorld(position);
         // Editor.log('onCreateMoveCallbacks start pixelToWorld', position.x, position.y);
 
-        // position = node.convertToNodeSpaceAR(position);
+        position = node.convertToNodeSpaceAR(position);
         // Editor.log('onCreateMoveCallbacks start convertToNodeSpaceAR', position.x, position.y);
-
-        // 转换不正确，会有偏移 先用中心点了
-        let position = cc.v2(0, 0);
 
         if (type === 'line') {
           const len = vertexes.length;
@@ -83,7 +81,7 @@ class PointsPolygonGizmo extends Editor.Gizmo {
             vertexes[index].y = vertexes[index - 1].y;
           }
           vertexes[i + 1].x = round(position.x);
-          vertexes[i + 1].y = round(-position.y);
+          vertexes[i + 1].y = round(position.y);
 
           // Editor.log('onCreateMoveCallbacks start line', position);
           target.vertexes = vertexes;
