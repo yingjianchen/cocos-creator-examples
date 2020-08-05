@@ -1,5 +1,7 @@
 // author: http://lamyoung.com/
 
+// https://mp.weixin.qq.com/s/EkMP_UcFcWTlSn_4Ml8zsA
+
 const gfx = cc.gfx;
 
 const { ccclass, property, executeInEditMode, requireComponent, menu } = cc._decorator;
@@ -124,7 +126,7 @@ export default class MeshPolygonSprite extends cc.Component {
             // 计算顶点索引 
             const ids = [];
             // 多边形切割 poly2tri，支持简单的多边形，确保顶点按顺序且不自交
-            const countor = this.vertexes.map((p) => { return { x: p.x, y: p.y } });//[].concat(this.vertexes);
+            const countor = this.vertexes.map((p) => { return { x: p.x, y: p.y } });
             const swctx = new poly2tri.SweepContext(countor, { cloneArrays: true });
             // cc.log('countor', countor.length, countor);
             try {
@@ -151,8 +153,7 @@ export default class MeshPolygonSprite extends cc.Component {
             // cc.log('ids');
             // cc.log(ids);
             mesh.setIndices(ids);
-
-
+            
             this.renderer.mesh = mesh;
         }
     }

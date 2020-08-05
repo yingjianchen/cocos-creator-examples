@@ -15,7 +15,7 @@ github: https://github.com/baiyuwubing
 qq 交流群: 859642112  
 
 
-## 无聊的小游戏(如果有帮助，随意玩两局，当是打赏)
+##  一个简单的~~广告播放器~~小游戏(可以点两下支持一下～)
 
 ![](./img/qiuqiu.jpg)  
 
@@ -32,6 +32,15 @@ brightness/saturation/constrast
 https://mp.weixin.qq.com/s/bKjJS3KX2rEI0F7_4QPJEw
 
 ![](./2.4.x/img/demo01.gif)  
+
+### demo02
+
+多边形裁剪图片与gizmo
+
+https://mp.weixin.qq.com/s/bKjJS3KX2rEI0F7_4QPJEw
+
+
+
 
 
 ## [quadtree_collision](./quadtree_collision) 

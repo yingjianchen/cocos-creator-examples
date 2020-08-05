@@ -11,6 +11,12 @@ https://mp.weixin.qq.com/s/bKjJS3KX2rEI0F7_4QPJEw
 
 ![](./img/demo01.gif)  
 
+## demo02
+
+多边形裁剪图片与gizmo
+
+https://mp.weixin.qq.com/s/bKjJS3KX2rEI0F7_4QPJEw
+
 
 
 ---

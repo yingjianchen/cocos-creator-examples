@@ -4,6 +4,8 @@
 
 // https://github.com/svgdotjs/svg.js
 
+// https://mp.weixin.qq.com/s/EkMP_UcFcWTlSn_4Ml8zsA
+
 function round(num) {
   return Math.round(num * 10) / 10;
 }
@@ -38,39 +40,12 @@ class PointsPolygonGizmo extends Editor.Gizmo {
         const type = param.type;
         const vertexes = target.vertexes;
 
-        // Editor.log('---------------------------->')
-
-        // for (const key in this._view) {
-        //   const element = this._view[key];
-        //   if (typeof element === 'number')
-        //     Editor.log('this._view', key, element);
-        // }
-
-        // Editor.log('---------------------------->')
-
-
-        // for (const key in this) {
-        //   const element = this[key];
-        //   // if (typeof element === 'number')
-        //   Editor.log('this', key, element);
-        // }
-
-        // Editor.log('_lastMapping', this._lastMapping.x, this._lastMapping.y);
-
-        // Editor.log('---------------------------->')
-        // Editor.log('onCreateMoveCallbacks start', x, y, i, type, this._view.scale);
-
         // 转换坐标点到节点下
-        // 转换不正确，会有偏移 todo
         let position = cc.v2(x, y);
         position = Editor.GizmosUtils.snapPixelWihVec2(position);
-        // Editor.log('onCreateMoveCallbacks start snapPixelWihVec2', position.x, position.y);
-
         position = this._view.pixelToWorld(position);
-        // Editor.log('onCreateMoveCallbacks start pixelToWorld', position.x, position.y);
-
         position = node.convertToNodeSpaceAR(position);
-        // Editor.log('onCreateMoveCallbacks start convertToNodeSpaceAR', position.x, position.y);
+
 
         if (type === 'line') {
           const len = vertexes.length;
@@ -127,11 +102,7 @@ class PointsPolygonGizmo extends Editor.Gizmo {
        * @param event mousedown dom event
        */
       end: (updated, event, param) => {
-        // const i = param.i;
-        // const type = param.type;
-        // Editor.log('onCreateMoveCallbacks end', updated)
-        // Editor.log('onCreateMoveCallbacks end', event)
-        // Editor.log('onCreateMoveCallbacks end', param)
+ 
       }
     };
   }
@@ -246,4 +217,26 @@ class PointsPolygonGizmo extends Editor.Gizmo {
 module.exports = PointsPolygonGizmo;
 
 
-// 欢迎关注公众号【白玉无冰】
+// 欢迎关注微信公众号[白玉无冰]
+
+/**
+█████████████████████████████████████
+█████████████████████████████████████
+████ ▄▄▄▄▄ █▀█ █▄██▀▄ ▄▄██ ▄▄▄▄▄ ████
+████ █   █ █▀▀▀█ ▀▄▀▀▀█▄▀█ █   █ ████
+████ █▄▄▄█ █▀ █▀▀▀ ▀▄▄ ▄ █ █▄▄▄█ ████
+████▄▄▄▄▄▄▄█▄▀ ▀▄█ ▀▄█▄▀ █▄▄▄▄▄▄▄████
+████▄▄  ▄▀▄▄ ▄▀▄▀▀▄▄▄ █ █ ▀ ▀▄█▄▀████
+████▀ ▄  █▄█▀█▄█▀█  ▀▄ █ ▀ ▄▄██▀█████
+████ ▄▀▄▄▀▄ █▄▄█▄ ▀▄▀ ▀ ▀ ▀▀▀▄ █▀████
+████▀ ██ ▀▄ ▄██ ▄█▀▄ ██▀ ▀ █▄█▄▀█████
+████   ▄██▄▀ █▀▄▀▄▀▄▄▄▄ ▀█▀ ▀▀ █▀████
+████ █▄ █ ▄ █▀ █▀▄█▄▄▄▄▀▄▄█▄▄▄▄▀█████
+████▄█▄█▄█▄█▀ ▄█▄   ▀▄██ ▄▄▄ ▀   ████
+████ ▄▄▄▄▄ █▄██ ▄█▀  ▄   █▄█  ▄▀█████
+████ █   █ █ ▄█▄ ▀  ▀▀██ ▄▄▄▄ ▄▀ ████
+████ █▄▄▄█ █ ▄▄▀ ▄█▄█▄█▄ ▀▄   ▄ █████
+████▄▄▄▄▄▄▄█▄██▄▄██▄▄▄█████▄▄█▄██████
+█████████████████████████████████████
+█████████████████████████████████████
+ */
