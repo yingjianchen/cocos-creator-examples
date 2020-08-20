@@ -66,6 +66,7 @@ declare namespace cc {
 	declare interface SpriteFrame {
 		uv: number[];
 		_rotated: boolean;
+		vertices: { u: number[], v: number[], x: number[], y: number[], nu: number[], nv: number[], triangles: number[] };
 	}
 
 	declare interface RenderData {

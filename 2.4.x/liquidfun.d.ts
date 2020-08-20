@@ -1,5 +1,6 @@
 // originally copy from https://github.com/gogachinchaladze/ivanets/blob/eee28cfa4ded80201f7c1e838e094e157490b146/definitions/liquidfun/liquidfun.d.ts
 // make it Cocos Creator affine by caogtaa
+// add some api by lamyoung [白玉无冰]
 
 declare module b2 {
 	declare var waterParticle: any;
@@ -456,6 +457,7 @@ declare module b2 {
 		angularVelocity: number
 		shape: b2.Shape
 		strength: number;
+		groupFlags: number;
 	}
 
 	declare class ParticleGroup {
@@ -481,6 +483,14 @@ declare module b2 {
 		GetColorBuffer(): Uint8Array;
 
 		SetRadius(radious: number): void;
+	}
+
+	export class ParticleFlag {
+		static b2_elasticParticle;
+	}
+
+	export class ParticleGroupFlag {
+		static b2_solidParticleGroup;
 	}
 }
 

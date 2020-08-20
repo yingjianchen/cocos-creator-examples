@@ -37,7 +37,13 @@ https://mp.weixin.qq.com/s/bKjJS3KX2rEI0F7_4QPJEw
 
 多边形裁剪图片与gizmo
 
-https://mp.weixin.qq.com/s/bKjJS3KX2rEI0F7_4QPJEw
+https://mp.weixin.qq.com/s/EkMP_UcFcWTlSn_4Ml8zsA
+
+![](./2.4.x/img/demo02.gif)  
+
+### demo03
+
+![](./2.4.x/img/demo03.gif)  
 
 
 

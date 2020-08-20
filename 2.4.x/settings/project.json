@@ -32,5 +32,8 @@
     }
   },
   "preview-port": 8888,
-  "start-scene": "7f9b5896-3f41-4b27-8769-c36401e8502a"
+  "start-scene": "7f9b5896-3f41-4b27-8769-c36401e8502a",
+  "migrate-history": [
+    "cloud-function"
+  ]
 }
