@@ -2,7 +2,7 @@
 // author: http://lamyoung.com/
 const { ccclass, property } = cc._decorator;
 
-
+// https://mp.weixin.qq.com/s/T-xkgkLonYqA_4yqPIYLSg
 let particleSystem;
 const PTM_RATIO = cc.PhysicsManager.PTM_RATIO;
 const PSD_RADIUS = 2;
