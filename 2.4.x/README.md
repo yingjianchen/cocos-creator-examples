@@ -27,6 +27,14 @@ https://mp.weixin.qq.com/s/T-xkgkLonYqA_4yqPIYLSg
 
 ![](./img/demo03.gif)  
 
+## demo04
+
+噪声纹理之消融效果！ shader 入门精要！ Cocos Creator Shader !
+
+https://mp.weixin.qq.com/s/9od3cxdinGJ4q8Zjfc4qFQ
+
+![](./img/demo04.gif)  
+
 ---
 
 导航：https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ
