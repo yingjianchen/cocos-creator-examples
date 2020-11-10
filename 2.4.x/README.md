@@ -35,6 +35,17 @@ https://mp.weixin.qq.com/s/9od3cxdinGJ4q8Zjfc4qFQ
 
 ![](./img/demo04.gif)  
 
+
+
+## demo05
+
+2d图片光照效果， add 2d sprite a base light (Blinn-Phong)
+
+
+![](./img/demo05.gif)  
+
+
+
 ---
 
 导航：https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ
