@@ -15,7 +15,7 @@ CCEffect %{
         alphaThreshold: { value: 0.5 }
         lightColor: { value: [1, 1, 1, 1], inspector: { type: color } }
         lightPos: { value: [0, 0, 1, 1] }
-        ambientStrength: { value: 0.1 }
+        ambientLight: { value: [0.1, 0.1, 0.1, 1], inspector: { type: color } }
         shininess: { value: 32.0 }
 }%
 
@@ -78,7 +78,7 @@ CCProgram fs %{
   uniform LAMYOUMG_COM{
     vec4 lightColor;
     vec4 lightPos;
-    float ambientStrength;
+    vec4 ambientLight;
     float shininess;
   };
 
@@ -92,7 +92,7 @@ CCProgram fs %{
     vec3 viewPos = cc_cameraPos.xyz;
 
     // ambient
-    vec3 ambient = ambientStrength * lightColor.rgb;
+    vec3 ambient = ambientLight.rgb;
 
     // 
     vec3 norm = normalize(v_normal);
@@ -102,12 +102,11 @@ CCProgram fs %{
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = diff * lightColor.rgb;
 
-    // phong- specular
-    // float specularStrength = 0.5;
+    // phong-specular
     // vec3 viewDir = normalize(viewPos - v_pos);
     // vec3 reflectDir = reflect(-lightDir, norm);
     // float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32.0);
-    // vec3 specular = specularStrength * spec * lightColor.rgb;
+    // vec3 specular = spec * lightColor.rgb;
 
     // blint-phong
     vec3 viewDir    = normalize(viewPos - v_pos);

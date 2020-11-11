@@ -9,13 +9,10 @@
   "_techniqueIndex": 0,
   "_techniqueData": {
     "0": {
-      "defines": {
-        "USE_TEXTURE": true
-      },
       "props": {
         "lightPos": {
           "__type__": "cc.Vec4",
-          "x": 0,
+          "x": -1,
           "y": 0,
           "z": 1,
           "w": 1
@@ -23,12 +20,21 @@
         "lightColor": {
           "__type__": "cc.Color",
           "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 255
+          "g": 249,
+          "b": 249,
+          "a": 0
         },
-        "ambientStrength": 0.1,
-        "shininess": 32
+        "shininess": 1000,
+        "ambientLight": {
+          "__type__": "cc.Color",
+          "r": 30,
+          "g": 30,
+          "b": 30,
+          "a": 255
+        }
+      },
+      "defines": {
+        "USE_TEXTURE": true
       }
     }
   }
