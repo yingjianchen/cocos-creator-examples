@@ -14,6 +14,8 @@ B站视频: https://space.bilibili.com/1756070/video
 github: https://github.com/baiyuwubing  
 qq 交流群: 859642112  
 
+gitee 同步地址： https://gitee.com/lamyoung/cocos-creator-examples 
+
 
 ##  一个简单的~~广告播放器~~小游戏(可以点两下支持一下～)
 
@@ -23,6 +25,15 @@ qq 交流群: 859642112
 ## [2.4.x](./2.4.x)
 
 cocos creator 2.4.x demo
+
+### demo05
+
+2d图片光照效果， add 2d sprite a base light (Blinn-Phong Light Model)
+
+基础光照模型！CocosCreator2D光照!  
+https://mp.weixin.qq.com/s/RtARzTb9KahZ70Ct5r8GRw
+
+![](./2.4.x/img/demo05.gif)  
 
 ### demo01
 

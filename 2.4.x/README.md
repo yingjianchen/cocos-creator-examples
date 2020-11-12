@@ -39,8 +39,10 @@ https://mp.weixin.qq.com/s/9od3cxdinGJ4q8Zjfc4qFQ
 
 ## demo05
 
-2d图片光照效果， add 2d sprite a base light (Blinn-Phong)
+2d图片光照效果， add 2d sprite a base light (Blinn-Phong Light Model)
 
+基础光照模型！CocosCreator2D光照!  
+https://mp.weixin.qq.com/s/RtARzTb9KahZ70Ct5r8GRw
 
 ![](./img/demo05.gif)  
 
