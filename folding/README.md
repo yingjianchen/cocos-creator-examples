@@ -16,11 +16,10 @@ qq 交流群: 859642112
 
 
 
-##  垂直文本Label 
+##  折叠效果 
 
 cocos creator v3.0.0 
 
-https://mp.weixin.qq.com/s/tMT9ZMFvYf9QoIdWaL8fOQ
 
 ```ts
 /*

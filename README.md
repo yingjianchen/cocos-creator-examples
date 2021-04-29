@@ -21,6 +21,14 @@ gitee 同步地址： https://gitee.com/lamyoung/cocos-creator-examples
 
 ![](./img/qiuqiu.jpg)  
 
+## [垂直文本Label](./VerticalLabelTest)
+
+cocos creator v3.0.0 
+
+https://mp.weixin.qq.com/s/tMT9ZMFvYf9QoIdWaL8fOQ
+
+![](./img/VerticalLabelTest.gif)
+
 
 ## [2.4.x](./2.4.x)
 
