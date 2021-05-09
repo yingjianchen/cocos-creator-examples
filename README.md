@@ -21,6 +21,16 @@ gitee 同步地址： https://gitee.com/lamyoung/cocos-creator-examples
 
 ![](./img/qiuqiu.jpg)  
 
+## [折纸效果](./folding)
+
+cocos creator v3.0.0 
+
+![](./img/folding.gif)
+
+https://mp.weixin.qq.com/s/1guPBbKkG6iWCcWa_uz6CQ
+
+http://store.cocos.com/app/detail/2844
+
 ## [垂直文本Label](./VerticalLabelTest)
 
 cocos creator v3.0.0 
