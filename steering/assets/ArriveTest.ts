@@ -53,7 +53,7 @@ export class ArriveTest extends Component {
 
 
     private onTouchEnd(evt: EventTouch) {
-        evt.getLocation(_temp_v2)
+        evt.getUILocation(_temp_v2)
         _temp_v3.set(_temp_v2.x, _temp_v2.y, 0)
         this.node.getComponent(UITransform)?.convertToNodeSpaceAR(_temp_v3, _temp_v3)
         this.target.setPosition(_temp_v3)

@@ -8,11 +8,7 @@ const temp2_v2 = v2()
 const temp3_v2 = v2()
 const temp4_v2 = v2()
 const temp5_v2 = v2()
-
-interface ICircleLike {
-    position: Vec2
-    radius: number
-}
+ 
 
 @ccclass('SteeredVehicle')
 export class SteeredVehicle extends Vehicle {
@@ -74,26 +70,48 @@ export class SteeredVehicle extends Vehicle {
     }
 
     pursue(target: Vehicle): void {
-        const lookAheadTime: number = Vec2.distance(this._position, target.position) / this.maxSpeed;
-        const predictedTarget: Vec2 = Vec2.add(temp2_v2, target.position, Vec2.multiplyScalar(temp_v2, target.velocity, lookAheadTime));
-        this.seek(predictedTarget)
+        const toTarget = Vec2.subtract(temp_v2, target.position, this._position)
+        if (toTarget.dot(this.heading) > 0 && this.heading.dot(target.heading) < -0.95) {
+            // 如果面对面，正好在前面，就直接飞过去
+            this.seek(target.position)
+        } else {
+            const lookAheadTime: number = Vec2.distance(this._position, target.position) / (this.maxSpeed + target.velocity.length());
+            const predictedTarget: Vec2 = Vec2.add(temp2_v2, target.position, Vec2.multiplyScalar(temp_v2, target.velocity, lookAheadTime));
+            this.seek(predictedTarget)
+        }
+    }
+
+    pursueOffset(target: Vehicle, offset: Vec2): void {
+        const localOffset = temp_v2.set(
+            target.side.x * offset.x + target.side.y * offset.y,
+            target.heading.x * offset.x + target.heading.y * offset.y
+        )
+        const offsetTargetPos = Vec2.add(temp_v2, target.position, localOffset)
+        const lookAheadTime: number = Vec2.distance(this._position, offsetTargetPos) / (this.maxSpeed + target.velocity.length())
+        const predictedTarget: Vec2 =
+            Vec2.add(
+                temp2_v2,
+                offsetTargetPos,
+                Vec2.multiplyScalar(temp2_v2, target.velocity, lookAheadTime),
+            );
+        this.arrive(predictedTarget)
     }
 
     evade(target: Vehicle): void {
-        const lookAheadTime: number = Vec2.distance(this._position, target.position) / this.maxSpeed;
+        const lookAheadTime: number = Vec2.distance(this._position, target.position) / (this.maxSpeed + target.velocity.length())
         const predictedTarget: Vec2 = Vec2.add(temp2_v2, target.position, Vec2.multiplyScalar(temp_v2, target.velocity, lookAheadTime));
         this.flee(predictedTarget)
     }
 
     wander(): void {
-        const center: Vec2 = Vec2.multiplyScalar(temp_v2, Vec2.normalize(temp_v2, this.velocity), this.wanderDistance)
+        const center: Vec2 = Vec2.multiplyScalar(temp_v2, this.heading, this.wanderDistance)
         const offset: Vec2 = temp2_v2.set(this.wanderRadius, 0)
         offset.rotate(this.wanderAngle + Math.random() * this.wanderRange - this.wanderRange * .5)
         const force: Vec2 = center.add(offset);
         this._steeredForce.add(force);
     }
 
-    avoid(circles: ICircleLike[]): void {
+    avoid(circles: Vehicle[]): void {
         for (let i = 0; i < circles.length; i++) {
             const circle = circles[i];
             const heading: Vec2 = temp_v2.set(this.velocity)

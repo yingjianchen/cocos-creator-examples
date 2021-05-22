@@ -3,5 +3,10 @@
   "script": {
     "useDefineForClassFields": false,
     "allowDeclareFields": false
+  },
+  "general": {
+    "designResolution": {
+      "fitHeight": true
+    }
   }
 }
