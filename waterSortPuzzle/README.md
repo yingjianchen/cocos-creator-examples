@@ -20,6 +20,7 @@ qq 交流群: 859642112
 
 cocos creator v3.1.0 
 
+https://mp.weixin.qq.com/s/DXl7_rvI5fS3Fg-OmHvgmg
 
 ```ts
 /*
