@@ -64,11 +64,11 @@ export class TestSplit extends Component {
     private onTouchEnd(evt: EventTouch) {
 
         console.log(evt.type, 'onTouchEnd')
-        evt.getStartLocation(_temp_v2)
+        evt.getUIStartLocation(_temp_v2)
         _temp_v3.set(_temp_v2.x, _temp_v2.y, 0)
         this.node.getComponent(UITransform)?.convertToNodeSpaceAR(_temp_v3, _temp_v3)
         _temp_v2.set(_temp_v3.x, _temp_v3.y)
-        evt.getLocation(_temp_v2_2)
+        evt.getUILocation(_temp_v2_2)
         _temp_v3_2.set(_temp_v2_2.x, _temp_v2_2.y, 0)
         this.node.getComponent(UITransform)?.convertToNodeSpaceAR(_temp_v3_2, _temp_v3_2)
         _temp_v2_2.set(_temp_v3_2.x, _temp_v3_2.y)
@@ -87,7 +87,7 @@ export class TestSplit extends Component {
             }
         }
         const splitUvs = splitUvs0.concat(splitUvs1), splitPolygons = splitPolygons0.concat(splitPolygons1)
-        console.log(splitPolygons, splitUvs)
+        // console.log(splitPolygons, splitUvs)
         this.renderPolygonSprite(splitPolygons, splitUvs)
         if (evt.type === Node.EventType.TOUCH_END) {
             this._origin_polygons = splitPolygons

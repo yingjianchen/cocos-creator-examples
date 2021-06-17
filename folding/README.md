@@ -24,6 +24,19 @@ https://mp.weixin.qq.com/s/1guPBbKkG6iWCcWa_uz6CQ
 
 http://store.cocos.com/app/detail/2844
 
+
+
+## 论坛讨论贴    
+[https://forum.cocos.org/t/topic/112045](https://mp.weixin.qq.com/s/WUpppo1Db_pQTlaqpRQaTw)
+
+
+## 其他商店链接  
+[不停歇的球小游戏源码(免费)](https://store.cocos.com/app/detail/2297)  
+[竖直文本(免费)](https://store.cocos.com/app/detail/2857)  
+[转向行为Demo(免费)](https://store.cocos.com/app/detail/2893)  
+[渐变色文字(免费)](https://store.cocos.com/app/detail/2950)  
+[折纸效果(100分)](http://store.cocos.com/app/detail/2844)
+
 ```ts
 /*
 █████████████████████████████████████
