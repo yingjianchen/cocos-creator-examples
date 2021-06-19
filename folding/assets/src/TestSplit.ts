@@ -1,5 +1,5 @@
 
-import { v3 } from 'cc';
+import { v3, Vec3 } from 'cc';
 import { _decorator, Component, Node, Vec2, v2, instantiate, EventTouch, UITransform } from 'cc';
 import { PolygonSprite } from './PolygonSprite';
 import { PolygonUtil } from './PolygonUtil';
@@ -20,9 +20,9 @@ export class TestSplit extends Component {
     private _origin_uvs: Vec2[][] = [[]]
     private _all_polygonSprites: PolygonSprite[] = []
 
-    onLoad(){
+    onLoad() {
         console.info(
-`
+            `
 欢迎关注微信公众号  白玉无冰 
 
 导航：https://mp.weixin.qq.com/s/Ht0kIbaeBEds_wUeUlu8JQ
@@ -46,8 +46,8 @@ export class TestSplit extends Component {
 ████▄▄▄▄▄▄▄█▄██▄▄██▄▄▄█████▄▄█▄██████
 █████████████████████████████████████
 █████████████████████████████████████
-`     
-)
+`
+        )
     }
 
     start() {
@@ -58,25 +58,29 @@ export class TestSplit extends Component {
     }
 
     private onTouchStart(evt: EventTouch) {
-        // this.reset()
+        
     }
 
     private onTouchEnd(evt: EventTouch) {
+        // console.log(evt.type, 'onTouchEnd')
+        evt.getUIStartLocation(_temp_v2);
+        _temp_v3.set(_temp_v2.x, _temp_v2.y, 0);
+        this.node.getComponent(UITransform)?.convertToNodeSpaceAR(_temp_v3, _temp_v3);
+        const touchStartPos = _temp_v2.set(_temp_v3.x, _temp_v3.y);
+        evt.getUILocation(_temp_v2_2);
+        _temp_v3_2.set(_temp_v2_2.x, _temp_v2_2.y, 0);
+        this.node.getComponent(UITransform)?.convertToNodeSpaceAR(_temp_v3_2, _temp_v3_2);
+        const touchEndPos = _temp_v2_2.set(_temp_v3_2.x, _temp_v3_2.y);
+        if (Vec2.squaredDistance(touchStartPos, touchEndPos) < 100) {
+            // 触摸距离太小
+            return
+        }
 
-        console.log(evt.type, 'onTouchEnd')
-        evt.getUIStartLocation(_temp_v2)
-        _temp_v3.set(_temp_v2.x, _temp_v2.y, 0)
-        this.node.getComponent(UITransform)?.convertToNodeSpaceAR(_temp_v3, _temp_v3)
-        _temp_v2.set(_temp_v3.x, _temp_v3.y)
-        evt.getUILocation(_temp_v2_2)
-        _temp_v3_2.set(_temp_v2_2.x, _temp_v2_2.y, 0)
-        this.node.getComponent(UITransform)?.convertToNodeSpaceAR(_temp_v3_2, _temp_v3_2)
-        _temp_v2_2.set(_temp_v3_2.x, _temp_v3_2.y)
 
         const splitPolygons0: Vec2[][] = [], splitPolygons1: Vec2[][] = []
             , splitUvs0: Vec2[][] = [], splitUvs1: Vec2[][] = []
         for (let index = 0; index < this._origin_polygons.length; index++) {
-            const { splitUvs, splitPolygons } = PolygonUtil.splitPolygon(_temp_v2, _temp_v2_2, this._origin_polygons[index], this._origin_uvs[index])
+            const { splitUvs, splitPolygons } = PolygonUtil.splitPolygon(touchStartPos, touchEndPos, this._origin_polygons[index], this._origin_uvs[index])
             if (splitPolygons[0].length >= 3) {
                 splitPolygons0.push(splitPolygons[0])
                 splitUvs0.push(splitUvs[0])

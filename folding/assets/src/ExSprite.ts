@@ -1,7 +1,8 @@
 import { _decorator, Sprite, Vec2, IAssembler, __private, dynamicAtlasManager } from 'cc';
 const { ccclass, property } = _decorator;
 
-
+// assembler 介绍ppt
+// https://lamyoung.gitee.io/web/slidev/assembler-sprite-simple/dist  
 
 
 
