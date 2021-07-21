@@ -14,7 +14,13 @@ gitee 同步地址： https://gitee.com/lamyoung
 
 qq 交流群: 859642112  
 
+## Fake3D && Depth Map
 
+https://www.bilibili.com/video/BV1Xy4y1L7s6
+
+## MatCap 
+
+https://mp.weixin.qq.com/s/_BkQVpEiQaqQ8VojnA0l2w
 
 ## 鼠标悬停图片效果 shader
 
