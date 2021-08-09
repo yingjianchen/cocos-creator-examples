@@ -47,6 +47,9 @@ https://mp.weixin.qq.com/s/RtARzTb9KahZ70Ct5r8GRw
 ![](./img/demo05.gif)  
 
 
+## demo06
+
+截图base64
 
 ---
 
